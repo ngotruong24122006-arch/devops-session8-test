@@ -1,0 +1,35 @@
+
+services:
+  webservice:
+    image: ghcr.io/ngotruong24122006-arch/webservice:${IMAGE_TAG:-latest}
+    container_name: webservice
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://webservice_db:5432/webservice_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 1234$
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      webservice_db:
+        condition: service_healthy
+
+  webservice_db:
+    image: postgres:17-alpine
+    container_name: webservice_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234$
+      POSTGRES_DB: webservice_db
+    volumes:
+      - webservice_db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d webservice_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  webservice_db-data:
