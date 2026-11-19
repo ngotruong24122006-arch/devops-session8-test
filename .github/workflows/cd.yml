@@ -48,7 +48,7 @@ jobs:
             # 1. Clone repository neu chua ton tai
             if [ ! -d "$DEPLOY_PATH" ]; then
               echo "[1/7] Clone repository..."
-              git clone https://github.com/ngotruong24122006-arch/devops-session8-test.gitngotruong24122006-arch "$DEPLOY_PATH"
+              git clone https://github.com/ngotruong24122006-arch/devops-session8-test.git "$DEPLOY_PATH"
             fi
 
             cd "$DEPLOY_PATH"
