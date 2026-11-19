@@ -51,6 +51,12 @@
         - name: Grant execute permission for gradlew
           run: chmod +x gradlew
 
+        - name: Debug Gradle Environment
+          run: |
+            java -version
+            ./gradlew --version
+            ./gradlew buildEnvironment --info
+
         # 4. Chạy Unit Test và Integration Test
         - name: Run Unit & Integration Tests
           env:
